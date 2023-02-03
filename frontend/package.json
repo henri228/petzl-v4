@@ -17,6 +17,7 @@
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "^4.9.0",
+		"apexcharts": "^3.36.3",
 		"moment": "^2.29.4"
 	}
 }

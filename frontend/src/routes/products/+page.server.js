@@ -7,7 +7,7 @@ const aggregateOffers = (offers) => {
     const results = offers.reduce((acc, item) => {
         const { ean, name, priceMap, priceCurrent } = item;
 
-        if(!acc[ean]){
+        if (!acc[ean]) {
             acc[ean] = {
                 retailer: 1,
                 name,
@@ -36,9 +36,11 @@ export const load = async () => {
         }
     })
 
-    //aggregateOffers
+    if (!offers) {
+        throw error(404, 'No offers found.')
+    }
+
     const results = aggregateOffers(offers)
-    console.log(results)
 
     return results
 }

@@ -1,4 +1,6 @@
-<script>
+<h1>test</h1>
+
+<!-- <script>
     export let data
 </script>
 
@@ -16,4 +18,4 @@
             Number of offers: {data.kpis.nbOffers}
         </li>
     </ul>
-</div>
+</div> -->

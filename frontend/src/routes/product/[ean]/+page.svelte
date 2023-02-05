@@ -17,8 +17,8 @@
     return dateArray;
   }
 
-  let start = "2023-01-01";
-  let end = "2023-02-03";
+  let start = "2023-02-01";
+  let end = moment().format().split("T")[0];
   let dates = fillDatesArray(start, end);
 
   console.log(data.parsedOffers);
@@ -55,11 +55,10 @@
 
   const series = parseTimeSeries(data.parsedOffers, dates);
 
-
   var options = {
     series,
     title: {
-      text: "Saved words",
+      text: data.params.ean,
       align: "left",
     },
     chart: {
@@ -72,12 +71,12 @@
       parentHeightOffset: 0,
       animations: {
         enabled: false,
-      }
+      },
     },
     stroke: {
-        curve: 'stepline',
-        width: 2,
-      },
+      curve: "stepline",
+      width: 2,
+    },
     xaxis: {
       type: "datetime",
       labels: {
@@ -98,11 +97,9 @@
       },
     },
     tooltip: {
-        enabled: true,
+      enabled: true,
     },
   };
-
-
 
   function chart(node) {
     const chart = new ApexCharts(node, options);
@@ -115,6 +112,7 @@
     };
   }
 </script>
+
 
 <div id="chart-wrapper">
   <div id="apex-chart" use:chart />

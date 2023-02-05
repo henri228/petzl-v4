@@ -2,11 +2,6 @@ import db from '$lib/db'
 import { error } from '@sveltejs/kit'
 import moment from 'moment'
 
-const getUniqueRetailers = (items) => {
-    const uniqueValues = [...new Set(items.map((item) => item.retailer))];
-    return uniqueValues;
-  };
-
 const parseOffers = (offers) => {
     const results = offers.reduce((acc, item) => {
         const { retailer, date, priceCurrent } = item;
@@ -14,7 +9,7 @@ const parseOffers = (offers) => {
         if (!acc[retailer]) {
             acc[retailer] = [
                 {
-                    date: date, 
+                    date: date,
                     priceCurrent: priceCurrent,
                 }
             ]
@@ -28,9 +23,9 @@ const parseOffers = (offers) => {
         }
 
         return acc
-      }, {});
+    }, {});
 
-      return results;
+    return results;
 }
 
 
@@ -46,8 +41,6 @@ export const load = async ({ params }) => {
     }
 
     const parsedOffers = parseOffers(offers)
-
-    console.log(parsedOffers)
 
     return { params, offers, parsedOffers }
 }

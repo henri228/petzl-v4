@@ -30,6 +30,7 @@ const aggregateOffers = (offers) => {
 const parseData = (products) => {
     let productsOverview = [];
     for (let item in products) {
+        console.log(products[item])
       const pricesCurrentWithoutZeroes = products[item].pricesCurrent.filter(
         (value) => value != 0
       );

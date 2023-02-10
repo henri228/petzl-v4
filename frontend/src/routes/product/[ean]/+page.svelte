@@ -4,10 +4,10 @@
   import moment from "moment";
   import _ from "lodash";
   import KpiCard from "$lib/component/KpiCard.svelte";
-
   import { format } from "date-fns";
-  let startDate = null;
-  let endDate = null;
+
+  let startDate = moment().subtract(15, "days").format();
+  let endDate = moment().format().split("T")[0];
 
   function handleStartDateChange(event) {
     startDate = new Date(event.target.value);
@@ -16,6 +16,7 @@
 
   function handleEndDateChange(event) {
     endDate = new Date(event.target.value);
+    console.log("endDate : ", moment(endDate).format().split("T")[0]);
   }
 
   const buildAggregatedTab = (data) => {
@@ -29,15 +30,21 @@
 
   const aggregatedTab = buildAggregatedTab(data.offers);
 
-  console.log(aggregatedTab);
+  let start = moment().subtract(15, "days").format();
+  let end = moment().format().split("T")[0];
+
+  let dates = fillDatesArray(start, end);
+  let series = parseTimeSeries(data.parsedOffers, dates);
+
+  $: dates = fillDatesArray(startDate, endDate);
 
   const buildOverviewKpis = (data) => {
     let kpis = {
-      priceMap: data[0].priceMap,
+      priceMap: data[0]?.priceMap,
       priceAvg: "",
       priceMin: "",
       priceMax: "",
-      nbOffers: data.length,
+      nbOffers: data?.length,
       maxDiscounter: "",
       discountMax: "",
       discountAvg: "",
@@ -77,13 +84,7 @@
     return dateArray;
   }
 
-  let start = moment().subtract(15, "days").format();
-  let end = moment().format().split("T")[0];
-  let dates = fillDatesArray(start, end);
-
-  console.log(dates);
-
-  const parseTimeSeries = (offers, dates) => {
+  function parseTimeSeries(offers, dates) {
     let series = [];
     for (const key in offers) {
       let retailer = {
@@ -111,51 +112,56 @@
     }
 
     return series;
-  };
+  }
 
-  const series = parseTimeSeries(data.parsedOffers, dates);
+  $: series = parseTimeSeries(data.parsedOffers,  dates);
 
-  var options = {
-    series,
-    chart: {
-      type: "line",
-      width: "100%",
-      height: 300,
-      toolbar: {
-        show: true,
-      },
-      parentHeightOffset: 0,
-      animations: {
-        enabled: false,
-      },
-    },
-    stroke: {
-      curve: "stepline",
-      width: 2,
-    },
-    xaxis: {
-      type: "datetime",
-      labels: {
-        style: {
-          fontWeight: 800,
+  let options = getOptions(series);
+  $: options =  getOptions(series)
+
+  function getOptions(series) {
+    return {
+      series,
+      chart: {
+        type: "line",
+        width: "100%",
+        height: 300,
+        toolbar: {
+          show: true,
+        },
+        parentHeightOffset: 0,
+        animations: {
+          enabled: false,
         },
       },
-    },
-    dataLabels: {
-      enabled: false,
-      style: {
-        fontSize: 14,
+      stroke: {
+        curve: "stepline",
+        width: 2,
       },
-      background: {
-        padding: 10,
-        borderWidth: 3,
-        borderColor: "#a9d4a5",
+      xaxis: {
+        type: "datetime",
+        labels: {
+          style: {
+            fontWeight: 800,
+          },
+        },
       },
-    },
-    tooltip: {
-      enabled: true,
-    },
-  };
+      dataLabels: {
+        enabled: false,
+        style: {
+          fontSize: 14,
+        },
+        background: {
+          padding: 10,
+          borderWidth: 3,
+          borderColor: "#a9d4a5",
+        },
+      },
+      tooltip: {
+        enabled: true,
+      },
+    };
+  }
 
   function chart(node) {
     const chart = new ApexCharts(node, options);
@@ -219,14 +225,14 @@
     <h3 class="text-2xl font-bold mt-10">Chart</h3>
 
     <div id="chart-wrapper">
+      {#key options.series}
       <div id="apex-chart" use:chart />
+      {/key}
     </div>
   </div>
 
   <div class="container">
     <h3 class="text-2xl font-bold mt-10">Details</h3>
-
-
 
     <div class="container mt-5">
       <table class="min-w-full text-left divide-y divide-gray-200">
@@ -247,10 +253,18 @@
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 even:bg-white odd:bg-gray-100"
             >
               <td class="px-4 py-2">{offer.retailer}</td>
-              <td class="px-4 py-2">{offer.priceCurrent != 0 ? '€ ' + parseFloat(offer.priceCurrent).toFixed(2): ""}</td>
-              <td class="px-4 py-2"> {offer.priceCurrent != 0
-                ? ((offer.priceCurrent / offer.priceMap - 1) * 100).toFixed(0) + "%"
-                : ""}</td>
+              <td class="px-4 py-2"
+                >{offer.priceCurrent != 0
+                  ? "€ " + parseFloat(offer.priceCurrent).toFixed(2)
+                  : ""}</td
+              >
+              <td class="px-4 py-2">
+                {offer.priceCurrent != 0
+                  ? ((offer.priceCurrent / offer.priceMap - 1) * 100).toFixed(
+                      0
+                    ) + "%"
+                  : ""}</td
+              >
               <td class="px-4 py-2">📷</td>
               <td class="px-4 py-2">
                 <a href={offer.url} target="_blank">Source</a>
@@ -262,7 +276,6 @@
     </div>
   </div>
 </div>
-
 
 <div>
   <input type="date" bind:value={startDate} on:change={handleStartDateChange} />

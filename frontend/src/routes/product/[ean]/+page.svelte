@@ -5,7 +5,7 @@
   import _ from "lodash";
   import KpiCard from "$lib/component/KpiCard.svelte";
 
-  let startDate = moment().subtract(15, "days").format("YYYY-MM-DD");
+  let startDate = moment().subtract(7, "days").format("YYYY-MM-DD");
   let endDate = moment().format("YYYY-MM-DD");
 
   function handleStartDateChange(event) {
@@ -220,9 +220,22 @@
 
   <div>
     <h3 class="text-2xl font-bold mt-10">Chart</h3>
-    <div>
-      <input type="date" bind:value={startDate} on:change={handleStartDateChange} />
-      <input type="date" bind:value={endDate} on:change={handleEndDateChange} />
+
+    <div class="border border-gray-200 rounded py-2 px-4 flex w-1/3 mt-5 mb-5">
+      <div class="text-xs text-gray-600 mr-2">From</div>
+      <input
+        type="date"
+        bind:value={startDate}
+        on:change={handleStartDateChange}
+        class="flex-1 p-2 border border-gray-200 rounded mr-2"
+      />
+      <div class="text-xs text-gray-600 mr-2">To</div>
+      <input
+        type="date"
+        bind:value={endDate}
+        on:change={handleEndDateChange}
+        class="flex-1 p-2 border border-gray-200 rounded"
+      />
     </div>
 
     <div id="chart-wrapper">

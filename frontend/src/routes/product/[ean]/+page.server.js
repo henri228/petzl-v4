@@ -1,6 +1,5 @@
 import db from '$lib/db'
 import { error } from '@sveltejs/kit'
-import moment from 'moment'
 
 const parseOffers = (offers) => {
     const results = offers.reduce((acc, item) => {

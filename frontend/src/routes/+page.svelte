@@ -26,7 +26,6 @@
   };
 
   const overviewKpis = getOverviewKpis(data);
-  console.log(overviewKpis);
 
   $: searchTerm = "";
   $: filteredProducts = data.kpis.filter((product) => {

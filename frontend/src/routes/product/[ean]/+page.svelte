@@ -4,20 +4,16 @@
   import moment from "moment";
   import _ from "lodash";
   import KpiCard from "$lib/component/KpiCard.svelte";
-  import { format } from "date-fns";
 
-
-  let startDate = moment().subtract(15, "days").format();
-  let endDate = moment().format().split("T")[0];
+  let startDate = moment().subtract(15, "days").format("YYYY-MM-DD");
+  let endDate = moment().format("YYYY-MM-DD");
 
   function handleStartDateChange(event) {
-    startDate = new Date(event.target.value);
-    console.log("startDate : ", moment(startDate).format().split("T")[0]);
+    startDate = moment(event.target.value).format("YYYY-MM-DD");
   }
 
   function handleEndDateChange(event) {
-    endDate = new Date(event.target.value);
-    console.log("endDate : ", moment(endDate).format().split("T")[0]);
+    endDate = moment(event.target.value).format("YYYY-MM-DD");
   }
 
   const buildAggregatedTab = (data) => {
@@ -115,10 +111,10 @@
     return series;
   }
 
-  $: series = parseTimeSeries(data.parsedOffers,  dates);
+  $: series = parseTimeSeries(data.parsedOffers, dates);
 
   let options = getOptions(series);
-  $: options =  getOptions(series)
+  $: options = getOptions(series);
 
   function getOptions(series) {
     return {
@@ -176,115 +172,108 @@
   }
 </script>
 
-{#if data.offers[0]}
-  <div class="container p-5">
-    <h1 class="text-3xl font-bold">{data.offers[0].name}</h1>
-    <h2 class="text-md text-gray-500">{data.offers[0].ean}</h2>
+<div class="container p-5">
+  <h1 class="text-3xl font-bold">{data.offers[0].name}</h1>
+  <h2 class="text-md text-gray-500">{data.offers[0].ean}</h2>
 
-    <div class="container">
-      <h3 class="text-2xl font-bold mt-10">Overview</h3>
-      <div class="flex flex-wrap">
-        <div class="w-1/4 p-4">
-          <KpiCard
-            title="MAP"
-            kpi={"€ " + parseFloat(kpis.priceMap).toFixed(2)}
-          />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard
-            title="Avg Price"
-            kpi={"€ " + parseFloat(kpis.priceAvg).toFixed(2)}
-          />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard
-            title="Min Price"
-            kpi={"€ " + parseFloat(kpis.priceMin).toFixed(2)}
-          />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard
-            title="Max Price"
-            kpi={"€ " + parseFloat(kpis.priceMax).toFixed(2)}
-          />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard title="Nb Offers" kpi={kpis.nbOffers} />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard title="Max Discounter" kpi={"to do"} />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard title="Max Discount" kpi={kpis.discountMax} />
-        </div>
-        <div class="w-1/4 p-4">
-          <KpiCard title="Avg Discount" kpi={kpis.discountAvg} />
-        </div>
+  <div class="container">
+    <h3 class="text-2xl font-bold mt-10">Overview</h3>
+    <div class="flex flex-wrap">
+      <div class="w-1/4 p-4">
+        <KpiCard
+          title="MAP"
+          kpi={"€ " + parseFloat(kpis.priceMap).toFixed(2)}
+        />
       </div>
-    </div>
-
-    <div>
-      <h3 class="text-2xl font-bold mt-10">Chart</h3>
-
-      <div id="chart-wrapper">
-        {#key options.series}
-          <div id="apex-chart" use:chart />
-        {/key}
+      <div class="w-1/4 p-4">
+        <KpiCard
+          title="Avg Price"
+          kpi={"€ " + parseFloat(kpis.priceAvg).toFixed(2)}
+        />
       </div>
-    </div>
-
-    <div class="container">
-      <h3 class="text-2xl font-bold mt-10">Details</h3>
-
-      <div class="container mt-5">
-        <table class="min-w-full text-left divide-y divide-gray-200">
-          <thead class="bg-gray-50 ">
-            <tr
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              <th class="px-4 py-2">Name</th>
-              <th class="px-4 py-2">Price</th>
-              <th class="px-4 py-2">Discount</th>
-              <th class="px-4 py-2">Screenshot</th>
-              <th class="px-4 py-2">Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {#each aggregatedTab as offer}
-              <tr
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 even:bg-white odd:bg-gray-100"
-              >
-                <td class="px-4 py-2">{offer.retailer}</td>
-                <td class="px-4 py-2"
-                  >{offer.priceCurrent != 0
-                    ? "€ " + parseFloat(offer.priceCurrent).toFixed(2)
-                    : ""}</td
-                >
-                <td class="px-4 py-2">
-                  {offer.priceCurrent != 0
-                    ? ((offer.priceCurrent / offer.priceMap - 1) * 100).toFixed(
-                        0
-                      ) + "%"
-                    : ""}</td
-                >
-                <td class="px-4 py-2">📷</td>
-                <td class="px-4 py-2">
-                  <a href={offer.url} target="_blank">Source</a>
-                </td>
-              </tr>
-            {/each}
-          </tbody>
-        </table>
+      <div class="w-1/4 p-4">
+        <KpiCard
+          title="Min Price"
+          kpi={"€ " + parseFloat(kpis.priceMin).toFixed(2)}
+        />
+      </div>
+      <div class="w-1/4 p-4">
+        <KpiCard
+          title="Max Price"
+          kpi={"€ " + parseFloat(kpis.priceMax).toFixed(2)}
+        />
+      </div>
+      <div class="w-1/4 p-4">
+        <KpiCard title="Nb Offers" kpi={kpis.nbOffers} />
+      </div>
+      <div class="w-1/4 p-4">
+        <KpiCard title="Max Discounter" kpi={"to do"} />
+      </div>
+      <div class="w-1/4 p-4">
+        <KpiCard title="Max Discount" kpi={kpis.discountMax} />
+      </div>
+      <div class="w-1/4 p-4">
+        <KpiCard title="Avg Discount" kpi={kpis.discountAvg} />
       </div>
     </div>
   </div>
 
   <div>
-    <input
-      type="date"
-      bind:value={startDate}
-      on:change={handleStartDateChange}
-    />
-    <input type="date" bind:value={endDate} on:change={handleEndDateChange} />
+    <h3 class="text-2xl font-bold mt-10">Chart</h3>
+    <div>
+      <input type="date" bind:value={startDate} on:change={handleStartDateChange} />
+      <input type="date" bind:value={endDate} on:change={handleEndDateChange} />
+    </div>
+
+    <div id="chart-wrapper">
+      {#key options.series}
+        <div id="apex-chart" use:chart />
+      {/key}
+    </div>
   </div>
-{/if}
+
+  <div class="container">
+    <h3 class="text-2xl font-bold mt-10">Details</h3>
+
+    <div class="container mt-5">
+      <table class="min-w-full text-left divide-y divide-gray-200">
+        <thead class="bg-gray-50 ">
+          <tr
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Price</th>
+            <th class="px-4 py-2">Discount</th>
+            <th class="px-4 py-2">Screenshot</th>
+            <th class="px-4 py-2">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each aggregatedTab as offer}
+            <tr
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 even:bg-white odd:bg-gray-100"
+            >
+              <td class="px-4 py-2">{offer.retailer}</td>
+              <td class="px-4 py-2"
+                >{offer.priceCurrent != 0
+                  ? "€ " + parseFloat(offer.priceCurrent).toFixed(2)
+                  : ""}</td
+              >
+              <td class="px-4 py-2">
+                {offer.priceCurrent != 0
+                  ? ((offer.priceCurrent / offer.priceMap - 1) * 100).toFixed(
+                      0
+                    ) + "%"
+                  : ""}</td
+              >
+              <td class="px-4 py-2">📷</td>
+              <td class="px-4 py-2">
+                <a href={offer.url} target="_blank" rel="noreferrer">Source</a>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

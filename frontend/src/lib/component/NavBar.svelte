@@ -9,6 +9,9 @@
     <a href="/" class="text-white font-medium mr-4"> Home </a>
   </div>
   <div class="flex items-center">
-    <a href="/" class="text-white font-medium mr-4">Sign Out</a>
+    <form action="/logout" method="POST">
+      <button type="submit" class="text-white font-medium mr-4">Logout</button>
+    </form>
+    <!-- <a href="/" class="text-white font-medium mr-4">Sign Out</a> -->
   </div>
 </nav>

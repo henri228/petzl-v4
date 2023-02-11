@@ -92,6 +92,8 @@ declare module '$env/static/private' {
 	export const INIT_CWD: string;
 	export const EDITOR: string;
 	export const NODE_ENV: string;
+	export const SSL_CERT_FILE: string;
+	export const SSL_CERT_DIR: string;
 }
 
 /**
@@ -104,7 +106,8 @@ declare module '$env/static/private' {
  * ```
  */
 declare module '$env/static/public' {
-
+	export const PUBLIC_SUPABASE_URL: string;
+	export const PUBLIC_SUPABASE_ANON_KEY: string;
 }
 
 /**
@@ -187,6 +190,8 @@ declare module '$env/dynamic/private' {
 		INIT_CWD: string;
 		EDITOR: string;
 		NODE_ENV: string;
+		SSL_CERT_FILE: string;
+		SSL_CERT_DIR: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: string]: string | undefined;
 	}
@@ -204,6 +209,8 @@ declare module '$env/dynamic/private' {
  */
 declare module '$env/dynamic/public' {
 	export const env: {
+		PUBLIC_SUPABASE_URL: string;
+		PUBLIC_SUPABASE_ANON_KEY: string;
 		[key: `PUBLIC_${string}`]: string | undefined;
 	}
 }

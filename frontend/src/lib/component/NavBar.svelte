@@ -6,12 +6,11 @@
     <a href="/" class="text-white font-medium mr-4"
       ><img src="logo.png" alt="" class="h-8 mr-4" />
     </a>
-    <a href="/" class="text-white font-medium mr-4"> Home </a>
+    <a href="/products" class="text-white font-medium mr-4"> Products </a>
   </div>
   <div class="flex items-center">
     <form action="/logout" method="POST">
       <button type="submit" class="text-white font-medium mr-4">Logout</button>
     </form>
-    <!-- <a href="/" class="text-white font-medium mr-4">Sign Out</a> -->
   </div>
 </nav>

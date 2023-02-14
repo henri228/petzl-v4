@@ -1,5 +1,6 @@
 import db from '$lib/db'
-import { error } from '@sveltejs/kit'
+import { error, redirect } from '@sveltejs/kit'
+import { getSupabase } from '@supabase/auth-helpers-sveltekit'
 
 const parseOffers = (offers) => {
     const results = offers.reduce((acc, item) => {
@@ -28,7 +29,12 @@ const parseOffers = (offers) => {
 }
 
 
-export const load = async ({ params }) => {
+export const load = async ({ locals, params }) => {
+
+    if(!locals.session){
+        throw redirect(303, '/login')
+    }
+    
     const offers = await db.offers.findMany({
         where: {
             ean: params.ean

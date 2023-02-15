@@ -4,6 +4,7 @@
   import moment from "moment";
   import _ from "lodash";
   import KpiCard from "$lib/component/KpiCard.svelte";
+  import { get } from "svelte/store";
 
   let startDate = moment().subtract(7, "days").format("YYYY-MM-DD");
   let endDate = moment().format("YYYY-MM-DD");
@@ -32,8 +33,6 @@
 
   let dates = fillDatesArray(start, end);
   let series = parseTimeSeries(data.parsedOffers, dates);
-
-  console.log('series : ', series)
 
   $: dates = fillDatesArray(startDate, endDate);
 
@@ -172,6 +171,19 @@
       },
     };
   }
+
+  const getMaxDiscounter = (series, priceMin) => {
+    let maxDiscounters = [];
+
+    for(let serie of series){
+      if(serie.data[serie.data.length-1][1] === priceMin){
+        maxDiscounters.push(serie.name)
+      }
+    }
+    return maxDiscounters
+  };
+
+  kpis.maxDiscounter = getMaxDiscounter(series, kpis.priceMin)
 </script>
 
 <main
@@ -213,7 +225,7 @@
           <KpiCard title="Nb Offers" kpi={kpis.nbOffers} />
         </div>
         <div class="w-1/4 p-4">
-          <KpiCard title="Max Discounter" kpi={"to do"} />
+          <KpiCard title="Max Discounter" kpi={kpis.maxDiscounter} />
         </div>
         <div class="w-1/4 p-4">
           <KpiCard title="Max Discount" kpi={kpis.discountMax} />
@@ -316,15 +328,15 @@
                       >
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                        >
-                        {#if offer.screenshot}
-                        <a href="/screenshot/{offer.retailer}/{offer.screenshot}">
-                          <button>📷</button>
-                        </a>
-                        {/if}
-                        
-                        </td
                       >
+                        {#if offer.screenshot}
+                          <a
+                            href="/screenshot/{offer.retailer}/{offer.screenshot}"
+                          >
+                            <button>📷</button>
+                          </a>
+                        {/if}
+                      </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                         ><a

@@ -4,6 +4,19 @@ import moment from 'moment'
 import _ from 'lodash'
 import { getSupabase } from '@supabase/auth-helpers-sveltekit'
 
+import fs from 'fs'
+import path from 'path'
+
+const deleteScreenshotDirectory = () => {
+    const dirPath = path.join('./static', 'screenshot')
+    if(fs.existsSync(dirPath)){
+        fs.rmdir(dirPath, { recursive: true }, (err) => {
+            if(err) throw err;
+        })
+    }
+    
+}
+
 
 const aggregateOffers = (offers) => {
     const results = offers.reduce((acc, item) => {
@@ -77,6 +90,8 @@ export const load = async (event) => {
     if (!offers) {
         throw error(404, 'No offers found.')
     }
+
+    deleteScreenshotDirectory()
 
     const aggregatedOffers = aggregateOffers(offers)
     const kpis = parseKpis(aggregatedOffers)

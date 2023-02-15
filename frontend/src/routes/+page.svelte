@@ -2,31 +2,22 @@
   export let data;
 </script>
 
-<!-- <main
-  class="container bg-white my-5 rounded-lg shadow-xl"
-  style="min-height:80vh;"
->
-  Auth page
-  {#if data.session}
-    <p>Welcome, {data.session.user.email}</p>
-  {:else}
-    <div>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    </div>
-  {/if}
-</main> -->
-
 {#if data.session}
-<main class="container bg-white my-5 rounded-lg shadow-xl" style="min-height:80vh; min-width: 100vh;">
-<div class="p-5 text-center">
-  <h1 class="text-3xl font-black mb-5">⛰️ Welcome</h1>
-  <h2 class="text-xl font-bold mb-5">You are connected with {data.session.user.email}</h2>
-  <h3>This platform is strictly confidential and exclusively reserved to Petzl employees.</h3>
-</div>
-  
-</main>
-
+  <main
+    class="container bg-white my-5 rounded-lg shadow-xl"
+    style="min-height:80vh; min-width: 100vh;"
+  >
+    <div class="p-5 text-center">
+      <h1 class="text-3xl font-black mb-5">⛰️ Welcome</h1>
+      <h2 class="text-xl font-bold mb-5">
+        You are connected with {data.session.user.email}
+      </h2>
+      <h3>
+        This platform is strictly confidential and exclusively reserved to Petzl
+        employees.
+      </h3>
+    </div>
+  </main>
 {:else}
   <main style="min-height:80vh;">
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">

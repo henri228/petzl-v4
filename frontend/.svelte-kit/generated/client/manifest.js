@@ -16,10 +16,10 @@ export const server_loads = [0];
 export const dictionary = {
 	"/": [2],
 	"/login": [~3],
-	"/productsv2": [~6],
 	"/products": [~5],
 	"/product/[ean]": [~4],
-	"/register": [~7]
+	"/register": [~6],
+	"/screenshot/[retailer]/[link]": [~7]
 };
 
 export const hooks = {

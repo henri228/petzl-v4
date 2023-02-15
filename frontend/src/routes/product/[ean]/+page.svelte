@@ -33,6 +33,8 @@
   let dates = fillDatesArray(start, end);
   let series = parseTimeSeries(data.parsedOffers, dates);
 
+  console.log('series : ', series)
+
   $: dates = fillDatesArray(startDate, endDate);
 
   const buildOverviewKpis = (data) => {
@@ -251,82 +253,88 @@
       </div>
     </div>
 
-    <!-- <div class="container">
-      <h3 class="text-2xl font-bold mt-10">Details</h3>
-
-      <div class="container mt-5">
-        <table class="min-w-full text-left divide-y divide-gray-200">
-          <thead class="bg-gray-50 ">
-            <tr
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              <th class="px-4 py-2">Name</th>
-              <th class="px-4 py-2">Price</th>
-              <th class="px-4 py-2">Discount</th>
-              <th class="px-4 py-2">Screenshot</th>
-              <th class="px-4 py-2">Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {#each aggregatedTab as offer}
-              <tr
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 even:bg-white odd:bg-gray-100"
-              >
-                <td class="px-4 py-2">{offer.retailer}</td>
-                <td class="px-4 py-2"
-                  >{offer.priceCurrent != 0
-                    ? "€ " + parseFloat(offer.priceCurrent).toFixed(2)
-                    : ""}</td
-                >
-                <td class="px-4 py-2">
-                  {offer.priceCurrent != 0
-                    ? ((offer.priceCurrent / offer.priceMap - 1) * 100).toFixed(
-                        0
-                      ) + "%"
-                    : ""}</td
-                >
-                <td class="px-4 py-2">📷</td>
-                <td class="px-4 py-2">
-                  <a href={offer.url} target="_blank" rel="noreferrer">Source</a
-                  >
-                </td>
-              </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
-    </div> -->
-
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="mt-8 flex flex-col">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <div
+            class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+          >
+            <div
+              class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+            >
               <table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
                   <tr>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Discount</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Screenshot</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Source</th> 
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >Name</th
+                    >
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >Price</th
+                    >
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >Discount</th
+                    >
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >Screenshot</th
+                    >
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >Source</th
+                    >
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                   {#each aggregatedTab as offer}
-                  <tr>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{offer.retailer}</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{offer.priceCurrent != 0
-                      ? "€ " + parseFloat(offer.priceCurrent).toFixed(2)
-                      : ""}</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{offer.priceCurrent != 0
-                      ? ((offer.priceCurrent / offer.priceMap - 1) * 100).toFixed(
-                          0
-                        ) + "%"
-                      : ""}</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">📷</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href={offer.url} class="text-indigo-600" target="_blank" rel="noreferrer">Details</a></td>
-                  </tr>
+                    <tr>
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >{offer.retailer}</td
+                      >
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >{offer.priceCurrent != 0
+                          ? "€ " + parseFloat(offer.priceCurrent).toFixed(2)
+                          : ""}</td
+                      >
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >{offer.priceCurrent != 0
+                          ? (
+                              (offer.priceCurrent / offer.priceMap - 1) *
+                              100
+                            ).toFixed(0) + "%"
+                          : ""}</td
+                      >
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >
+                        {#if offer.screenshot}
+                        <a href="/screenshot/{offer.retailer}/{offer.screenshot}">
+                          <button>📷</button>
+                        </a>
+                        {/if}
+                        
+                        </td
+                      >
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        ><a
+                          href={offer.url}
+                          class="text-indigo-600"
+                          target="_blank"
+                          rel="noreferrer">Details</a
+                        ></td
+                      >
+                    </tr>
                   {/each}
                 </tbody>
               </table>

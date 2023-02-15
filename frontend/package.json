@@ -28,9 +28,12 @@
 		"air-datepicker": "^3.3.5",
 		"apexcharts": "^3.36.3",
 		"date-fns": "^2.29.3",
+		"fs": "^0.0.1-security",
 		"lodash": "^4.17.21",
 		"moment": "^2.29.4",
 		"nanocal-ranger": "^0.3.1",
+		"node-fetch": "^3.3.0",
+		"path": "^0.12.7",
 		"svelte-flatpickr": "^3.3.2",
 		"svelte-inclusive-datepicker": "^1.0.0-alpha.1"
 	}

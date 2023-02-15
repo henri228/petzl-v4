@@ -1,5 +1,6 @@
 <script>
   import KpiCard from "$lib/component/KpiCard.svelte";
+  import { each } from "svelte/internal";
   export let data;
 
   const getOverviewKpis = (data) => {
@@ -33,10 +34,10 @@
   });
 </script>
 
-<main
-  class="container bg-white my-5 rounded-lg shadow-xl"
-  style="min-height:80vh;"
->
+
+
+<main class="p-5 mb-5 container bg-white my-5 rounded-lg shadow-xl" >
+
   <div class="container mb-10 p-5">
     <h1 class="text-3xl font-bold">Overview</h1>
     <div class="flex flex-wrap">
@@ -52,59 +53,59 @@
     </div>
   </div>
 
-  <div class="container p-5">
+  <div class="container mb-10 p-5">
     <h1 class="text-3xl font-bold">Products</h1>
     <div class="container mt-5">
       <input
         bind:value={searchTerm}
         type="search"
-        class="rounded-xl w-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
-        placeholder="Search by name or ean..."
+        class="rounded-xl text-md w-1/4 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        placeholder="Search by name / code..."
       />
     </div>
+  </div>
 
-    <div class="container mt-5">
-      <table class="min-w-full text-left divide-y divide-gray-200">
-        <thead class="bg-gray-50 ">
-          <tr
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">EAN</th>
-            <th class="px-4 py-2">Resellers</th>
-            <th class="px-4 py-2">MAP</th>
-            <th class="px-4 py-2">Min Price</th>
-            <th class="px-4 py-2">Max Price</th>
-            <th class="px-4 py-2">Max Discount</th>
-            <th class="px-4 py-2">Avg Discount</th>
-            <th class="px-4 py-2">Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each filteredProducts as product, i}
-            <tr
-              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 even:bg-white odd:bg-gray-100"
-            >
-              <td class="px-4 py-2">{product.name}</td>
-              <td class="px-4 py-2">{product.ean}</td>
-              <td class="px-4 py-2">{product.nbRetailers}</td>
-              <td class="px-4 py-2">€ {product.priceMap.toFixed(2)}</td>
-              <td class="px-4 py-2">€ {product.priceMin.toFixed(2)}</td>
-              <td class="px-4 py-2">€ {product.priceMax.toFixed(2)}</td>
-              <td class="px-4 py-2"
-                >{(product.discountMax * 100).toFixed(0)}%</td
-              >
-              <td class="px-4 py-2"
-                >{(product.discountAvg * 100).toFixed(0)}%</td
-              >
-              <td class="px-4 py-2">
-                <a href="product/{product.ean}" class="text-pink-600">Details</a
-                >
-              </td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="mt-8 flex flex-col">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">EAN</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Resellers</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Map</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Min Price</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Max Price</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Max Discount</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Avg Discount</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Details</th>
+
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                {#each filteredProducts as product, i}
+                <tr>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.name}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.ean}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.nbRetailers}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">€ {product.priceMap.toFixed(2)}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">€ {product.priceMin.toFixed(2)}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">€ {product.priceMax.toFixed(2)}</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{(product.discountMax * 100).toFixed(0)}%</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{(product.discountAvg * 100).toFixed(0)}%</td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="product/{product.ean}" class="text-indigo-600">Details</a></td>
+                </tr>
+                {/each}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>
+
+

@@ -4,7 +4,6 @@
   import moment from "moment";
   import _ from "lodash";
   import KpiCard from "$lib/component/KpiCard.svelte";
-  import { get } from "svelte/store";
 
   let startDate = moment().subtract(7, "days").format("YYYY-MM-DD");
   let endDate = moment().format("YYYY-MM-DD");

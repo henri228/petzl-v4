@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon index.js"
+    "dev": "npx nodemon index.js",
+    "prod": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Henri Rion",
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.7.1",

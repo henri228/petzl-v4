@@ -8,8 +8,11 @@ app.use(cors({ origin: '*' }))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+
+const port = process.env.API_PORT
+
 app.get('/', async(req, res) => {
-    res.send('🔥 Server is ✅ on port 3000')
+    res.send(`🔥 Server is ✅ on port ${port}`)
 })
 
 const { launchCron } = require('./controllers/scheduler.controller')
@@ -20,4 +23,6 @@ const init = async() => {
 
 init()
 
-app.listen(3000)
+app.listen(port, () => {
+    console.log(`🔥 Server is listening on port ${process.env.API_PORT}`)
+})

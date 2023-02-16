@@ -5,6 +5,7 @@ const { createOffer } = require('./supabase.controller')
 
 const launchCron = async () => {
     cron.schedule('0 8 * * *', async () => {
+    // cron.schedule('*/10 * * * * *', async () => {
         try {
             console.log('📥 Fetching')
             const data = await fetchData();

@@ -1,6 +1,5 @@
 <script>
   import KpiCard from "$lib/component/KpiCard.svelte";
-  import { each } from "svelte/internal";
   export let data;
 
   const getOverviewKpis = (data) => {

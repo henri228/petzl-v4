@@ -4,8 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "npx prisma generate && vite dev",
-		"build": "vite build",
-		"preview": "vite preview"
+		"build": "npx prisma generate && vite build",
+		"preview": "npx prisma generate && vite preview"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^1.0.0",

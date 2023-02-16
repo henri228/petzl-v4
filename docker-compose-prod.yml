@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+
+  backend:
+    container_name: petzl-backend
+    build:
+      context: ./backend
+    environment:
+      API_PORT: "3000"
+      SUPABASE_URL: "https://xexdpkmsveabfnzkarin.supabase.co"
+      SUPABASE_APIKEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhleGRwa21zdmVhYmZuemthcmluIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzUwOTc4MDUsImV4cCI6MTk5MDY3MzgwNX0.npqaOMyGN6n0V_sgWyddJlho3XXqSKTSiJ19F6j5vVg"
+      PZ_TOKEN: "foj3vhhe1obfcj9rbfnlp8z0zxcd84oqi1d86w8k"
+    networks:
+      - petzl
+  
+  frontend:
+    container_name: petzl-frontend
+    build:
+      context: ./frontend
+    environment:
+      DATABASE_URL: "postgres://postgres:lQxydXOZyxkJ6Rbf6hXPAGY8EgHZGIkLemMxTwVWIerxLNpGCl8xU4K6OMMnYwFF@db.xexdpkmsveabfnzkarin.supabase.co:6543/postgres"
+      PUBLIC_SUPABASE_URL: "https://xexdpkmsveabfnzkarin.supabase.co"
+      PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhleGRwa21zdmVhYmZuemthcmluIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzUwOTc4MDUsImV4cCI6MTk5MDY3MzgwNX0.npqaOMyGN6n0V_sgWyddJlho3XXqSKTSiJ19F6j5vVg"
+    ports:
+      - "5173:5173"
+    networks:
+      - petzl
+
+networks:
+  petzl:
+    driver: bridge
